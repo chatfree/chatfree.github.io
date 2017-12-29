@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[python_flask]]></title>
+    <url>%2F2017%2F12%2F29%2Fpython-flask%2F</url>
+    <content type="text"><![CDATA[flask踩过的坑希望大家把遇到的问题都分享下，减少走弯路。1.router不能统一管理，我采用Django模式把所有的路由都配置在urls文件中2.router不能统一加载，没有找到像spring包扫描类似的工具类3.TemplateNotFound静态资源找不到4.debug模式 静态资源修改不生效，需要重启服务器if name == ‘main‘: #静态资源修改不需要重启app.jinja_env.auto_reload = Trueapp.run(debug=True)参考链接这里写链接内容5.Template 引用静态资源 url_for 内心崩溃，同一篇文章第二次写，由于系统原因上一篇没发成功，也找不到了。第二版就粗糙了些，请见谅，希望多提建议和分享遇到的坑。 相关代码下载地址：https://github.com/chatfree/flask_pit]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[First Article]]></title>
     <url>%2F2017%2F12%2F07%2Ffirst_article%2F</url>
     <content type="text"><![CDATA[第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑具体的坑后续慢慢补上]]></content>

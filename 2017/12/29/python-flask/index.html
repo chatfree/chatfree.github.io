@@ -15,13 +15,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="jackfree">
-<meta property="og:url" content="http://yoursite.com/public/archives/index.html">
+<meta name="description" content="flask踩过的坑希望大家把遇到的问题都分享下，减少走弯路。1.router不能统一管理，我采用Django模式把所有的路由都配置在urls文件中2.router不能统一加载，没有找到像spring包扫描类似的工具类3.TemplateNotFound静态资源找不到4.debug模式 静态资源修改不生效，需要重启服务器if name == ‘main‘:  #静态资源修改不需要重启app.jinj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python_flask">
+<meta property="og:url" content="http://yoursite.com/public/2017/12/29/python-flask/index.html">
 <meta property="og:site_name" content="jackfree">
+<meta property="og:description" content="flask踩过的坑希望大家把遇到的问题都分享下，减少走弯路。1.router不能统一管理，我采用Django模式把所有的路由都配置在urls文件中2.router不能统一加载，没有找到像spring包扫描类似的工具类3.TemplateNotFound静态资源找不到4.debug模式 静态资源修改不生效，需要重启服务器if name == ‘main‘:  #静态资源修改不需要重启app.jinj">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20171130113502382?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjI4Mjk4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171130113843390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjI4Mjk4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-12-29T02:37:35.711Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jackfree">
+<meta name="twitter:title" content="python_flask">
+<meta name="twitter:description" content="flask踩过的坑希望大家把遇到的问题都分享下，减少走弯路。1.router不能统一管理，我采用Django模式把所有的路由都配置在urls文件中2.router不能统一加载，没有找到像spring包扫描类似的工具类3.TemplateNotFound静态资源找不到4.debug模式 静态资源修改不生效，需要重启服务器if name == ‘main‘:  #静态资源修改不需要重启app.jinj">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171130113502382?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjI4Mjk4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -53,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives | jackfree</title>
+<title>python_flask | jackfree</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -63,8 +70,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
-        isArchive: true,
+        isPost: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -260,126 +267,163 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-python-flask" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2017/12/29/python-flask/" class="article-date">
+      <time datetime="2017-12-29T02:31:44.000Z" itemprop="datePublished">2017-12-29</time>
+</a>
+
+
+    </div>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python_flask
+    </h1>
+  
+
+      </header>
       
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/12/29/python-flask/" class="archive-article-date">
-      <time datetime="2017-12-29T02:31:44.000Z" itemprop="datePublished">12-29</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/29/python-flask/">python_flask</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
+    <div class="article-entry" itemprop="articleBody">
+      
           
+        <p>flask踩过的坑<br>希望大家把遇到的问题都分享下，减少走弯路。<br>1.router不能统一管理，我采用Django模式把所有的路由都配置在urls文件中<br>2.router不能统一加载，没有找到像spring包扫描类似的工具类<br>3.TemplateNotFound静态资源找不到<br><img src="http://img.blog.csdn.net/20171130113502382?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjI4Mjk4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"><br>4.debug模式 静态资源修改不生效，需要重启服务器<br>if name == ‘main‘: </p>
+<p>#静态资源修改不需要重启<br>app.jinja_env.auto_reload = True<br>app.run(debug=True)<br>参考链接这里写链接内容<br>5.Template 引用静态资源 url_for<br><img src="http://img.blog.csdn.net/20171130113843390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjI4Mjk4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></p>
+<p>内心崩溃，同一篇文章第二次写，由于系统原因上一篇没发成功，也找不到了。<br>第二版就粗糙了些，请见谅，希望多提建议和分享遇到的坑。</p>
+<p>相关代码下载地址：<a href="https://github.com/chatfree/flask_pit" target="_blank" rel="noopener">https://github.com/chatfree/flask_pit</a></p>
 
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    
   </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/12/29/python-flask/">python_flask</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">jack.deng</a></p>
+        <p><span>发布时间:</span>2017-12-29, 10:31:44</p>
+        <p><span>最后更新:</span>2017-12-29, 10:37:35</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/29/python-flask/" title="python_flask">http://yoursite.com/public/2017/12/29/python-flask/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/public/2017/12/29/python-flask/　　作者: jack.deng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/12/07/first_article/">
+                    First Article
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/12/07/first_article/" class="archive-article-date">
-      <time datetime="2017-12-07T08:26:09.970Z" itemprop="datePublished">12-07</time>
-</a>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/07/first_article/">First Article</a>
-    </h1>
-  
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"python_flask　| jackfree　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
 
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/test/">test</a>
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/12/07/first_article/" title="下一篇: First Article">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
     </div>
 
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/12/07/hello-world/" class="archive-article-date">
-      <time datetime="2017-12-07T08:03:47.512Z" itemprop="datePublished">12-07</time>
-</a>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/python-flask/">python_flask</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/first_article/">First Article</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/hello-world/">Hello World</a></li></ul>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/07/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/test/">test</a>
-    </div>
 
 
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">

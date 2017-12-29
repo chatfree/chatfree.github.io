@@ -271,6 +271,65 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-python-flask" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/12/29/python-flask/" class="article-date">
+      <time datetime="2017-12-29T02:31:44.000Z" itemprop="datePublished">2017-12-29</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/29/python-flask/">python_flask</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>flask踩过的坑<br>希望大家把遇到的问题都分享下，减少走弯路。<br>1.router不能统一管理，我采用Django模式把所有的路由都配置在urls文件中<br>2.router不能统一加载，没有找到像spring包扫描类似的工具类<br>3.TemplateNotFound静态资源找不到<br><img src="http://img.blog.csdn.net/20171130113502382?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjI4Mjk4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"><br>4.debug模式 静态资源修改不生效，需要重启服务器<br>if name == ‘main‘: </p>
+<p>#静态资源修改不需要重启<br>app.jinja_env.auto_reload = True<br>app.run(debug=True)<br>参考链接这里写链接内容<br>5.Template 引用静态资源 url_for<br><img src="http://img.blog.csdn.net/20171130113843390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjI4Mjk4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></p>
+<p>内心崩溃，同一篇文章第二次写，由于系统原因上一篇没发成功，也找不到了。<br>第二版就粗糙了些，请见谅，希望多提建议和分享遇到的坑。</p>
+<p>相关代码下载地址：<a href="https://github.com/chatfree/flask_pit" target="_blank" rel="noopener">https://github.com/chatfree/flask_pit</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-first_article" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
