@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[WebScoket]]></title>
+    <url>%2F2018%2F10%2F25%2Fwebscoket%2F</url>
+    <content type="text"><![CDATA[好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解项目采用springBoot+WebScoket通过springBoot快速生成一个gradle项目，打开 https://start.spring.io/把下载的zip包解压并导入到idea中#新建MyWebScoketConfig implements WebSocketConfigurer @Override public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) { registry.addHandler(getMyWebSocketHandler(),&quot;/chat&quot;) .addInterceptors(new HttpSessionHandshakeInterceptor(){ @Override public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map&lt;String, Object&gt; attributes) throws Exception { ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request; HttpServletRequest httpServletRequest = servletRequest.getServletRequest(); String mid = &quot;1&quot;;//httpServletRequest.getHeader(&quot;mid&quot;); if(!StringUtils.isEmpty(mid)){ attributes.put(&quot;mid&quot;,Long.valueOf(mid)); return true; } return false; } }).setAllowedOrigins(&quot;*&quot;); } @Bean public MyWebSocketHandler getMyWebSocketHandler(){ return new MyWebSocketHandler(); } #MyWebSocketHandler extends TextWebSocketHandlerstatic final Logger log = LoggerFactory.getLogger(MyWebSocketHandler.class); static final Map&lt;Long, WebSocketSession&gt; sessions = new ConcurrentHashMap&lt;&gt;(); @Override public void afterConnectionEstablished(WebSocketSession session) throws Exception { Long mid = getMid(session); log.info(&quot;connection &quot;+mid); sessions.put(mid,session); } @Override public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception { Long mid = getMid(session); log.info(&quot;close &quot;+mid); sessions.remove(mid); } @Override public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception { try { log.info(&quot;handleTransportError&quot;,exception); Long mid = getMid(session); session.close(); sessions.remove(mid); log.info(&quot;websocket error: &quot; + mid); } catch (Exception e) { log.error(&quot;handleTransportError error&quot;,e); } } @Override protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception { log.info(&quot;接收到客户端消息：&quot;+message.getPayload()); session.sendMessage(new TextMessage(&quot;服务器回复消息：&quot;+message.getPayload())); } public Long getMid(WebSocketSession session){ return (Long) session.getAttributes().getOrDefault(&quot;mid&quot;, null); } #配置文件采用yml方式server: port: 8888 session-timeout: 30 tomcat.max-threads: 0 tomcat.uri-encoding: UTF-8spring: application: name: webscoketlogging: level: root: INFO com: jackfree: webscoket: INFO #build 配置buildscript { ext { springBootVersion = ‘2.0.6.RELEASE’ } repositories { mavenCentral() } dependencies { classpath(“org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}”) }} apply plugin: ‘java’apply plugin: ‘eclipse’apply plugin: ‘org.springframework.boot’apply plugin: ‘io.spring.dependency-management’ group = ‘com.jackfree’version = ‘0.0.1-SNAPSHOT’sourceCompatibility = 1.8 repositories { mavenCentral()} dependencies { implementation(‘org.springframework.boot:spring-boot-starter-websocket’) testImplementation(‘org.springframework.boot:spring-boot-starter-test’)} #到这里简单的WebScoket就编写完成了 #js测试方法ws = new WebSocket(“ws://localhost:8888/chat”);// 建立 web socket 连接成功触发事件ws.onopen = function () { // 使用 send() 方法发送数据 ws.send(“client发送数据”);}; // 接收服务端数据时触发事件ws.onmessage = function (evt) { var received_msg = evt.data; alert(received_msg); }; // 断开 web socket 连接成功触发事件 ws.onclose = function () { alert(“连接已关闭…”); }; #源码地址 https://github.com/chatfree/webscoket]]></content>
+      <categories>
+        <category>im</category>
+      </categories>
+      <tags>
+        <tag>WebScoket</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[jenkins]]></title>
+    <url>%2F2018%2F08%2F17%2Fjenkins%2F</url>
+    <content type="text"><![CDATA[好久没更新博客了，太懒了，最近搞了一下jenkins所以记录下，防止忘记jenkins官网地址 https://jenkins.io/download/我是用的jar包的形式启动的，下载地址 http://mirrors.shu.edu.cn/jenkins/war-stable/2.121.3/jenkins.war启动命令 java -jar jenkins.war解锁jenkins密码在 ~/.jenkins\secrets\initialAdminPassword然后创建用户jenkins url可以不改]]></content>
+      <categories>
+        <category>auto deploy</category>
+      </categories>
+      <tags>
+        <tag>jenkins</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[python_flask]]></title>
     <url>%2F2017%2F12%2F29%2Fpython-flask%2F</url>
     <content type="text"><![CDATA[flask踩过的坑希望大家把遇到的问题都分享下，减少走弯路。1.router不能统一管理，我采用Django模式把所有的路由都配置在urls文件中2.router不能统一加载，没有找到像spring包扫描类似的工具类3.TemplateNotFound静态资源找不到4.debug模式 静态资源修改不生效，需要重启服务器if name == ‘main‘: #静态资源修改不需要重启app.jinja_env.auto_reload = Trueapp.run(debug=True)参考链接这里写链接内容5.Template 引用静态资源 url_for 内心崩溃，同一篇文章第二次写，由于系统原因上一篇没发成功，也找不到了。第二版就粗糙了些，请见谅，希望多提建议和分享遇到的坑。 相关代码下载地址：https://github.com/chatfree/flask_pit]]></content>
   </entry>
   <entry>
-    <title><![CDATA[First Article]]></title>
-    <url>%2F2017%2F12%2F07%2Ffirst_article%2F</url>
-    <content type="text"><![CDATA[第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑具体的坑后续慢慢补上]]></content>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2017%2F12%2F07%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
       <categories>
         <category>test</category>
       </categories>
@@ -17,9 +39,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2017%2F12%2F07%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <title><![CDATA[First Article]]></title>
+    <url>%2F2017%2F12%2F07%2Ffirst_article%2F</url>
+    <content type="text"><![CDATA[第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑具体的坑后续慢慢补上]]></content>
       <categories>
         <category>test</category>
       </categories>

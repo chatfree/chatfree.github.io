@@ -15,14 +15,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="404 Not Found">
-<meta property="og:url" content="http://yoursite.com/public/404.html">
+<meta name="description" content="好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解项目采用springBoot+WebScoket通过springBoot快速生成一个gradle项目，打开 https://start.spring.io/把下载的zip包解压并导入到idea中#新建MyWebScoketConfig implements WebSocketConfigurer @Override pub">
+<meta name="keywords" content="WebScoket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebScoket">
+<meta property="og:url" content="http://yoursite.com/public/2018/10/25/webscoket/index.html">
 <meta property="og:site_name" content="jackfree">
+<meta property="og:description" content="好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解项目采用springBoot+WebScoket通过springBoot快速生成一个gradle项目，打开 https://start.spring.io/把下载的zip包解压并导入到idea中#新建MyWebScoketConfig implements WebSocketConfigurer @Override pub">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-07T09:45:06.000Z">
+<meta property="og:updated_time" content="2018-10-25T06:49:28.581Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="404 Not Found">
+<meta name="twitter:title" content="WebScoket">
+<meta name="twitter:description" content="好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解项目采用springBoot+WebScoket通过springBoot快速生成一个gradle项目，打开 https://start.spring.io/把下载的zip包解压并导入到idea中#新建MyWebScoketConfig implements WebSocketConfigurer @Override pub">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -54,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>404 Not Found | jackfree</title>
+<title>WebScoket | jackfree</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -64,7 +68,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -261,11 +265,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="404-" class="article article-type-404" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-webscoket" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/404.html" class="article-date">
-      <time datetime="2017-12-07T05:50:27.000Z" itemprop="datePublished">2017-12-07</time>
+      <a href="/2018/10/25/webscoket/" class="article-date">
+      <time datetime="2018-10-25T06:29:50.072Z" itemprop="datePublished">2018-10-25</time>
 </a>
 
 
@@ -280,7 +284,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      404 Not Found
+      WebScoket
     </h1>
   
 
@@ -288,8 +292,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/im/">im</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebScoket/">WebScoket</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -297,36 +309,141 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
+        <h2 id="好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解"><a href="#好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解" class="headerlink" title="好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解"></a>好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解</h2><h1 id="项目采用springBoot-WebScoket"><a href="#项目采用springBoot-WebScoket" class="headerlink" title="项目采用springBoot+WebScoket"></a>项目采用springBoot+WebScoket</h1><h1 id="通过springBoot快速生成一个gradle项目，打开-https-start-spring-io"><a href="#通过springBoot快速生成一个gradle项目，打开-https-start-spring-io" class="headerlink" title="通过springBoot快速生成一个gradle项目，打开 https://start.spring.io/"></a>通过springBoot快速生成一个gradle项目，打开 <a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io/</a></h1><h1 id="把下载的zip包解压并导入到idea中"><a href="#把下载的zip包解压并导入到idea中" class="headerlink" title="把下载的zip包解压并导入到idea中"></a>把下载的zip包解压并导入到idea中</h1><p>#新建MyWebScoketConfig implements WebSocketConfigurer</p>
+<pre><code>@Override
+public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+    registry.addHandler(getMyWebSocketHandler(),&quot;/chat&quot;)
+            .addInterceptors(new HttpSessionHandshakeInterceptor(){
+        @Override
+        public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                                       WebSocketHandler wsHandler, Map&lt;String, Object&gt; attributes) throws Exception {
+            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+            HttpServletRequest httpServletRequest = servletRequest.getServletRequest();
+
+            String mid = &quot;1&quot;;//httpServletRequest.getHeader(&quot;mid&quot;);
+            if(!StringUtils.isEmpty(mid)){
+                attributes.put(&quot;mid&quot;,Long.valueOf(mid));
+                return true;
+            }
+            return false;
+        }
+
+    }).setAllowedOrigins(&quot;*&quot;);
+}
+@Bean
+public MyWebSocketHandler getMyWebSocketHandler(){
+    return new MyWebSocketHandler();
+}
+</code></pre><p>#MyWebSocketHandler extends TextWebSocketHandler<br>static final Logger log = LoggerFactory.getLogger(MyWebSocketHandler.class);</p>
+<pre><code>static final Map&lt;Long, WebSocketSession&gt; sessions = new ConcurrentHashMap&lt;&gt;();
+
+@Override
+public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    Long mid = getMid(session);
+    log.info(&quot;connection &quot;+mid);
+    sessions.put(mid,session);
+}
+
+@Override
+public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+    Long mid = getMid(session);
+    log.info(&quot;close &quot;+mid);
+    sessions.remove(mid);
+}
+
+@Override
+public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+    try {
+        log.info(&quot;handleTransportError&quot;,exception);
+        Long mid = getMid(session);
+        session.close();
+        sessions.remove(mid);
+        log.info(&quot;websocket error: &quot; + mid);
+    } catch (Exception e) {
+        log.error(&quot;handleTransportError error&quot;,e);
     }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
+}
 
+@Override
+protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    log.info(&quot;接收到客户端消息：&quot;+message.getPayload());
+    session.sendMessage(new TextMessage(&quot;服务器回复消息：&quot;+message.getPayload()));
+}
 
-          
-        
+public Long getMid(WebSocketSession session){
+    return  (Long) session.getAttributes().getOrDefault(&quot;mid&quot;, null);
+}
+</code></pre><p>#配置文件采用yml方式<br>server:<br>  port: 8888<br>  session-timeout: 30<br>  tomcat.max-threads: 0<br>  tomcat.uri-encoding: UTF-8<br>spring:<br>  application:<br>    name: webscoket<br>logging:<br>  level:<br>    root: INFO<br>    com:<br>      jackfree:<br>        webscoket: INFO</p>
+<p>#build 配置<br>buildscript {<br>    ext {<br>        springBootVersion = ‘2.0.6.RELEASE’<br>    }<br>    repositories {<br>        mavenCentral()<br>    }<br>    dependencies {<br>        classpath(“org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}”)<br>    }<br>}</p>
+<p>apply plugin: ‘java’<br>apply plugin: ‘eclipse’<br>apply plugin: ‘org.springframework.boot’<br>apply plugin: ‘io.spring.dependency-management’</p>
+<p>group = ‘com.jackfree’<br>version = ‘0.0.1-SNAPSHOT’<br>sourceCompatibility = 1.8</p>
+<p>repositories {<br>    mavenCentral()<br>}</p>
+<p>dependencies {<br>    implementation(‘org.springframework.boot:spring-boot-starter-websocket’)<br>    testImplementation(‘org.springframework.boot:spring-boot-starter-test’)<br>}</p>
+<p>#到这里简单的WebScoket就编写完成了</p>
+<p>#js测试方法<br>ws = new WebSocket(“ws://localhost:8888/chat”);<br>// 建立 web socket 连接成功触发事件<br>ws.onopen = function () {<br>    // 使用 send() 方法发送数据<br>    ws.send(“client发送数据”);<br>};</p>
+<p>// 接收服务端数据时触发事件<br>ws.onmessage = function (evt) { var received_msg = evt.data; alert(received_msg); };</p>
+<p>// 断开 web socket 连接成功触发事件 ws.onclose = function () { alert(“连接已关闭…”); };</p>
+<p>#源码地址 <a href="https://github.com/chatfree/webscoket" target="_blank" rel="noopener">https://github.com/chatfree/webscoket</a></p>
+
       
     </div>
     
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/10/25/webscoket/">WebScoket</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">jack.deng</a></p>
+        <p><span>发布时间:</span>2018-10-25, 14:29:50</p>
+        <p><span>最后更新:</span>2018-10-25, 14:49:28</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/10/25/webscoket/" title="WebScoket">http://yoursite.com/public/2018/10/25/webscoket/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/public/2018/10/25/webscoket/　　作者: jack.deng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/08/17/jenkins/">
+                    jenkins
+                </a>
+            </div>
+        
+    </nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x597D;&#x4E45;&#x6CA1;&#x66F4;&#x65B0;&#x535A;&#x5BA2;&#x4E86;&#xFF0C;&#x592A;&#x61D2;&#x4E86;&#xFF0C;&#x5199;&#x4E86;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x7684;WebScoket&#xFF0C;&#x7B80;&#x5355;&#x5199;&#x4E0B;&#x6211;&#x7684;&#x7406;&#x89E3;" class="headerlink" title="&#x597D;&#x4E45;&#x6CA1;&#x66F4;&#x65B0;&#x535A;&#x5BA2;&#x4E86;&#xFF0C;&#x592A;&#x61D2;&#x4E86;&#xFF0C;&#x5199;&#x4E86;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x7684;WebScoket&#xFF0C;&#x7B80;&#x5355;&#x5199;&#x4E0B;&#x6211;&#x7684;&#x7406;&#x89E3;"></a>&#x597D;&#x4E45;&#x6CA1;&#x66F4;&#x65B0;&#x535A;&#x5BA2;&#x4E86;&#xFF0C;&#x592A;&#x61D2;&#x4E86;&#xFF0C;&#x5199;&#x4E86;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x7684;WebScoket&#xFF0C;&#x7B80;&#x5355;&#x5199;&#x4E0B;&#x6211;&#x7684;&#x7406;&#x89E3;</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目采用springBoot-WebScoket"><span class="toc-number"></span> <span class="toc-text"><a href="#&#x9879;&#x76EE;&#x91C7;&#x7528;springBoot-WebScoket" class="headerlink" title="&#x9879;&#x76EE;&#x91C7;&#x7528;springBoot+WebScoket"></a>&#x9879;&#x76EE;&#x91C7;&#x7528;springBoot+WebScoket</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#通过springBoot快速生成一个gradle项目，打开-https-start-spring-io"><span class="toc-number"></span> <span class="toc-text"><a href="#&#x901A;&#x8FC7;springBoot&#x5FEB;&#x901F;&#x751F;&#x6210;&#x4E00;&#x4E2A;gradle&#x9879;&#x76EE;&#xFF0C;&#x6253;&#x5F00;-https-start-spring-io" class="headerlink" title="&#x901A;&#x8FC7;springBoot&#x5FEB;&#x901F;&#x751F;&#x6210;&#x4E00;&#x4E2A;gradle&#x9879;&#x76EE;&#xFF0C;&#x6253;&#x5F00; https://start.spring.io/"></a>&#x901A;&#x8FC7;springBoot&#x5FEB;&#x901F;&#x751F;&#x6210;&#x4E00;&#x4E2A;gradle&#x9879;&#x76EE;&#xFF0C;&#x6253;&#x5F00; <a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io/</a></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#把下载的zip包解压并导入到idea中"><span class="toc-number"></span> <span class="toc-text"><a href="#&#x628A;&#x4E0B;&#x8F7D;&#x7684;zip&#x5305;&#x89E3;&#x538B;&#x5E76;&#x5BFC;&#x5165;&#x5230;idea&#x4E2D;" class="headerlink" title="&#x628A;&#x4E0B;&#x8F7D;&#x7684;zip&#x5305;&#x89E3;&#x538B;&#x5E76;&#x5BFC;&#x5165;&#x5230;idea&#x4E2D;"></a>&#x628A;&#x4E0B;&#x8F7D;&#x7684;zip&#x5305;&#x89E3;&#x538B;&#x5E76;&#x5BFC;&#x5165;&#x5230;idea&#x4E2D;</span></a>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
 
@@ -344,7 +461,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"404 Not Found　| jackfree　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"WebScoket　| jackfree　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -357,6 +474,26 @@
 
 
 
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/08/17/jenkins/" title="下一篇: jenkins">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/25/webscoket/">WebScoket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/17/jenkins/">jenkins</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/python-flask/">python_flask</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/first_article/">First Article</a></li></ul>
 
 
 

@@ -4,8 +4,48 @@
 
     
   <url>
+    <loc>https://chatfree.github.io/2018/10/25/webscoket/</loc>
+    <lastmod>2018-10-25T06:49:28.581Z</lastmod>
+    <data>
+        <display>
+        <title>WebScoket</title>
+        <pubTime>2018-10-25T06:29:50.072Z</pubTime>
+        
+        <tag>WebScoket</tag>
+         
+         
+           
+             
+              <breadCrumb title="im" url="http://yoursite.com/public/categories/im/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://chatfree.github.io/2018/08/17/jenkins/</loc>
+    <lastmod>2018-08-17T08:46:05.000Z</lastmod>
+    <data>
+        <display>
+        <title>jenkins</title>
+        <pubTime>2018-08-17T07:59:18.000Z</pubTime>
+        
+        <tag>jenkins</tag>
+         
+         
+           
+             
+              <breadCrumb title="auto deploy" url="http://yoursite.com/public/categories/auto-deploy/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://chatfree.github.io/2017/12/29/python-flask/</loc>
-    <lastmod>2017-12-29T02:37:35.711Z</lastmod>
+    <lastmod>2017-12-29T02:37:34.000Z</lastmod>
     <data>
         <display>
         <title>python_flask</title>
@@ -21,11 +61,11 @@
     
   <url>
     <loc>https://chatfree.github.io/2017/12/07/hello-world/</loc>
-    <lastmod>2017-12-07T09:32:33.749Z</lastmod>
+    <lastmod>2017-12-07T09:32:32.000Z</lastmod>
     <data>
         <display>
         <title>Hello World</title>
-        <pubTime>2017-12-07T08:03:47.512Z</pubTime>
+        <pubTime>2017-12-07T09:32:32.000Z</pubTime>
         
         <tag>hexo</tag>
          
@@ -41,11 +81,11 @@
     
   <url>
     <loc>https://chatfree.github.io/2017/12/07/first_article/</loc>
-    <lastmod>2017-12-07T09:32:28.869Z</lastmod>
+    <lastmod>2017-12-07T09:32:28.000Z</lastmod>
     <data>
         <display>
         <title>First Article</title>
-        <pubTime>2017-12-07T08:26:09.970Z</pubTime>
+        <pubTime>2017-12-07T09:32:28.000Z</pubTime>
         
         <tag>hexo</tag>
          

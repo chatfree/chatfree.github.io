@@ -194,7 +194,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebScoket/">WebScoket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
                     </div>
                 </section>
                 
@@ -271,6 +271,207 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-webscoket" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/10/25/webscoket/" class="article-date">
+      <time datetime="2018-10-25T06:29:50.072Z" itemprop="datePublished">2018-10-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/25/webscoket/">WebScoket</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解"><a href="#好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解" class="headerlink" title="好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解"></a>好久没更新博客了，太懒了，写了一段时间的WebScoket，简单写下我的理解</h2><h1 id="项目采用springBoot-WebScoket"><a href="#项目采用springBoot-WebScoket" class="headerlink" title="项目采用springBoot+WebScoket"></a>项目采用springBoot+WebScoket</h1><h1 id="通过springBoot快速生成一个gradle项目，打开-https-start-spring-io"><a href="#通过springBoot快速生成一个gradle项目，打开-https-start-spring-io" class="headerlink" title="通过springBoot快速生成一个gradle项目，打开 https://start.spring.io/"></a>通过springBoot快速生成一个gradle项目，打开 <a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io/</a></h1><h1 id="把下载的zip包解压并导入到idea中"><a href="#把下载的zip包解压并导入到idea中" class="headerlink" title="把下载的zip包解压并导入到idea中"></a>把下载的zip包解压并导入到idea中</h1><p>#新建MyWebScoketConfig implements WebSocketConfigurer</p>
+<pre><code>@Override
+public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+    registry.addHandler(getMyWebSocketHandler(),&quot;/chat&quot;)
+            .addInterceptors(new HttpSessionHandshakeInterceptor(){
+        @Override
+        public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                                       WebSocketHandler wsHandler, Map&lt;String, Object&gt; attributes) throws Exception {
+            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+            HttpServletRequest httpServletRequest = servletRequest.getServletRequest();
+
+            String mid = &quot;1&quot;;//httpServletRequest.getHeader(&quot;mid&quot;);
+            if(!StringUtils.isEmpty(mid)){
+                attributes.put(&quot;mid&quot;,Long.valueOf(mid));
+                return true;
+            }
+            return false;
+        }
+
+    }).setAllowedOrigins(&quot;*&quot;);
+}
+@Bean
+public MyWebSocketHandler getMyWebSocketHandler(){
+    return new MyWebSocketHandler();
+}
+</code></pre><p>#MyWebSocketHandler extends TextWebSocketHandler<br>static final Logger log = LoggerFactory.getLogger(MyWebSocketHandler.class);</p>
+<pre><code>static final Map&lt;Long, WebSocketSession&gt; sessions = new ConcurrentHashMap&lt;&gt;();
+
+@Override
+public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    Long mid = getMid(session);
+    log.info(&quot;connection &quot;+mid);
+    sessions.put(mid,session);
+}
+
+@Override
+public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+    Long mid = getMid(session);
+    log.info(&quot;close &quot;+mid);
+    sessions.remove(mid);
+}
+
+@Override
+public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+    try {
+        log.info(&quot;handleTransportError&quot;,exception);
+        Long mid = getMid(session);
+        session.close();
+        sessions.remove(mid);
+        log.info(&quot;websocket error: &quot; + mid);
+    } catch (Exception e) {
+        log.error(&quot;handleTransportError error&quot;,e);
+    }
+}
+
+@Override
+protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    log.info(&quot;接收到客户端消息：&quot;+message.getPayload());
+    session.sendMessage(new TextMessage(&quot;服务器回复消息：&quot;+message.getPayload()));
+}
+
+public Long getMid(WebSocketSession session){
+    return  (Long) session.getAttributes().getOrDefault(&quot;mid&quot;, null);
+}
+</code></pre><p>#配置文件采用yml方式<br>server:<br>  port: 8888<br>  session-timeout: 30<br>  tomcat.max-threads: 0<br>  tomcat.uri-encoding: UTF-8<br>spring:<br>  application:<br>    name: webscoket<br>logging:<br>  level:<br>    root: INFO<br>    com:<br>      jackfree:<br>        webscoket: INFO</p>
+<p>#build 配置<br>buildscript {<br>    ext {<br>        springBootVersion = ‘2.0.6.RELEASE’<br>    }<br>    repositories {<br>        mavenCentral()<br>    }<br>    dependencies {<br>        classpath(“org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}”)<br>    }<br>}</p>
+<p>apply plugin: ‘java’<br>apply plugin: ‘eclipse’<br>apply plugin: ‘org.springframework.boot’<br>apply plugin: ‘io.spring.dependency-management’</p>
+<p>group = ‘com.jackfree’<br>version = ‘0.0.1-SNAPSHOT’<br>sourceCompatibility = 1.8</p>
+<p>repositories {<br>    mavenCentral()<br>}</p>
+<p>dependencies {<br>    implementation(‘org.springframework.boot:spring-boot-starter-websocket’)<br>    testImplementation(‘org.springframework.boot:spring-boot-starter-test’)<br>}</p>
+<p>#到这里简单的WebScoket就编写完成了</p>
+<p>#js测试方法<br>ws = new WebSocket(“ws://localhost:8888/chat”);<br>// 建立 web socket 连接成功触发事件<br>ws.onopen = function () {<br>    // 使用 send() 方法发送数据<br>    ws.send(“client发送数据”);<br>};</p>
+<p>// 接收服务端数据时触发事件<br>ws.onmessage = function (evt) { var received_msg = evt.data; alert(received_msg); };</p>
+<p>// 断开 web socket 连接成功触发事件 ws.onclose = function () { alert(“连接已关闭…”); };</p>
+<p>#源码地址 <a href="https://github.com/chatfree/webscoket" target="_blank" rel="noopener">https://github.com/chatfree/webscoket</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/im/">im</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebScoket/">WebScoket</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-jenkins" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/08/17/jenkins/" class="article-date">
+      <time datetime="2018-08-17T07:59:18.000Z" itemprop="datePublished">2018-08-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/17/jenkins/">jenkins</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="好久没更新博客了，太懒了，最近搞了一下jenkins所以记录下，防止忘记"><a href="#好久没更新博客了，太懒了，最近搞了一下jenkins所以记录下，防止忘记" class="headerlink" title="好久没更新博客了，太懒了，最近搞了一下jenkins所以记录下，防止忘记"></a>好久没更新博客了，太懒了，最近搞了一下jenkins所以记录下，防止忘记</h2><h1 id="jenkins官网地址-https-jenkins-io-download"><a href="#jenkins官网地址-https-jenkins-io-download" class="headerlink" title="jenkins官网地址 https://jenkins.io/download/"></a>jenkins官网地址 <a href="https://jenkins.io/download/" target="_blank" rel="noopener">https://jenkins.io/download/</a></h1><h1 id="我是用的jar包的形式启动的，下载地址-http-mirrors-shu-edu-cn-jenkins-war-stable-2-121-3-jenkins-war"><a href="#我是用的jar包的形式启动的，下载地址-http-mirrors-shu-edu-cn-jenkins-war-stable-2-121-3-jenkins-war" class="headerlink" title="我是用的jar包的形式启动的，下载地址 http://mirrors.shu.edu.cn/jenkins/war-stable/2.121.3/jenkins.war"></a>我是用的jar包的形式启动的，下载地址 <a href="http://mirrors.shu.edu.cn/jenkins/war-stable/2.121.3/jenkins.war" target="_blank" rel="noopener">http://mirrors.shu.edu.cn/jenkins/war-stable/2.121.3/jenkins.war</a></h1><h1 id="启动命令-java-jar-jenkins-war"><a href="#启动命令-java-jar-jenkins-war" class="headerlink" title="启动命令 java -jar jenkins.war"></a>启动命令 java -jar jenkins.war</h1><h1 id="解锁jenkins"><a href="#解锁jenkins" class="headerlink" title="解锁jenkins"></a>解锁jenkins</h1><h1 id="密码在-jenkins-secrets-initialAdminPassword"><a href="#密码在-jenkins-secrets-initialAdminPassword" class="headerlink" title="密码在 ~/.jenkins\secrets\initialAdminPassword"></a>密码在 ~/.jenkins\secrets\initialAdminPassword</h1><h1 id="然后创建用户"><a href="#然后创建用户" class="headerlink" title="然后创建用户"></a>然后创建用户</h1><h1 id="jenkins-url可以不改"><a href="#jenkins-url可以不改" class="headerlink" title="jenkins url可以不改"></a>jenkins url可以不改</h1>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/auto-deploy/">auto deploy</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/">jenkins</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-python-flask" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -330,11 +531,11 @@
 
 
   
-    <article id="post-first_article" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/12/07/first_article/" class="article-date">
-      <time datetime="2017-12-07T08:26:09.970Z" itemprop="datePublished">2017-12-07</time>
+      <a href="/2017/12/07/hello-world/" class="article-date">
+      <time datetime="2017-12-07T09:32:32.000Z" itemprop="datePublished">2017-12-07</time>
 </a>
 
 
@@ -349,7 +550,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/07/first_article/">First Article</a>
+      <a class="article-title" href="/2017/12/07/hello-world/">Hello World</a>
     </h1>
   
 
@@ -359,7 +560,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑"><a href="#第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑" class="headerlink" title="第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑"></a>第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑</h2><p>具体的坑后续慢慢补上</p>
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
     </div>
@@ -394,11 +603,11 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-first_article" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/12/07/hello-world/" class="article-date">
-      <time datetime="2017-12-07T08:03:47.512Z" itemprop="datePublished">2017-12-07</time>
+      <a href="/2017/12/07/first_article/" class="article-date">
+      <time datetime="2017-12-07T09:32:28.000Z" itemprop="datePublished">2017-12-07</time>
 </a>
 
 
@@ -413,7 +622,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/07/hello-world/">Hello World</a>
+      <a class="article-title" href="/2017/12/07/first_article/">First Article</a>
     </h1>
   
 
@@ -423,15 +632,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h2 id="第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑"><a href="#第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑" class="headerlink" title="第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑"></a>第一次用Hexo搭建个人博客，虽然都很人性化，但也遇到一些坑</h2><p>具体的坑后续慢慢补上</p>
 
       
     </div>
